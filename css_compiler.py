@@ -1,3 +1,4 @@
+import string
 import os
 from urllib.parse import quote
 from pyperclip import copy
@@ -54,8 +55,8 @@ with open("theme.css", "w", encoding="utf-8") as theme:
 with open("theme.css", "a", encoding="utf-8") as theme:
 	for png_file in png_files:
 		# Seting up vars
-		png_name = png_file[:-5].split(" ")[0]
-		associated_emoji = png_file[-5:-4]
+		associated_emoji = png_file[-5] if png_file[-6] in string.ascii_lowercase else png_file[-7:-4]
+		png_name = png_file[:-4].replace(associated_emoji, "").split(" ")[0]
 		link_name = quote(png_file[:-4])
 		# Compiling css
 		theme.write(templates["chat"].format(name=png_name, associated_emoji=associated_emoji, link_name=link_name))
